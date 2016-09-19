@@ -5,20 +5,41 @@ use Duan\DuanApp;
 use Duan\Lib\Hash;
 use Duan\Lib\UrlValidator;
 use Duan\Models\Url;
+use Schnittstabil\Csrf\TokenService\TokenService;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShortController
 {
     public function create(DuanApp $app, Request $request)
     {
+        /** @var TokenService $csrf */
+        $csrf = $app['csrf'];
+        $token = $csrf->generate();
+
+        $context = ['token' => $token];
+
         $twig = $app['twig'];
-        return $twig->render('create.twig');
+
+        return $twig->render('pages/create.twig', ['context' => $context]);
     }
 
     public function save(DuanApp $app, Request $request)
     {
         $u = $request->get('url');
         $h = $request->get('hash');
+        $t = $request->get('token');
+
+        /** @var TokenService $csrf */
+        $twig = $app['twig'];
+
+        $csrf = $app['csrf'];
+        $token = $csrf->generate();
+        $context['token'] = $token;
+
+        if (!$csrf->validate($t)) {
+            $context['hash'] = 'invalid token';
+            return $twig->render('pages/create.twig', ['context' => $context]);
+        }
 
         $this->checkToBack($u);
 
@@ -41,8 +62,6 @@ class ShortController
             }
         }
 
-        $twig = $app['twig'];
-
         $hash = $request->getScheme() . '://' . $request->getHost();
         if ('80' != $request->getPort()) {
             $hash .= ":" . $request->getPort();
@@ -51,7 +70,7 @@ class ShortController
 
         $context['hash'] = $hash;
 
-        return $twig->render('create.twig', ['context' => $context]);
+        return $twig->render('pages/create.twig', ['context' => $context]);
     }
 
     public function redirect(DuanApp $app, Request $request, $hash)

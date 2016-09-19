@@ -3,6 +3,7 @@
 namespace Duan;
 
 use Cicada\Application;
+use Duan\Providers\CSRFProvider;
 use Duan\Providers\HashProvider;
 use Duan\Providers\LoggerProvider;
 use Duan\Providers\TwigProvider;
@@ -33,6 +34,7 @@ class DuanApp extends Application
     public function boot()
     {
         $this->setupLogger();
+        $this->setupCSRF();
         $this->setupTwig();
     }
 
@@ -61,6 +63,12 @@ class DuanApp extends Application
     {
         $tp = new TwigProvider();
         $tp->register($this);
+    }
+
+    public function setupCSRF()
+    {
+        $csrfp = new CSRFProvider();
+        $csrfp->register($this);
     }
 
     public function configure()

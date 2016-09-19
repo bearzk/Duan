@@ -12,17 +12,17 @@ $app->exception(function(Exception $e) use ($app) {
 
     switch ($status) {
         case Response::HTTP_NOT_FOUND:
-            $template = '404.twig';
+            $template = 'pages/404.twig';
             $responseStatus = Response::HTTP_NOT_FOUND;
             break;
 
         case Response::HTTP_BAD_REQUEST:
             $responseStatus = Response::HTTP_BAD_REQUEST;
-            $template = '503.twig';
+            $template = 'pages/503.twig';
             break;
 
         default:
-            $template = '503.twig';
+            $template = 'pages/503.twig';
             $responseStatus = Response::HTTP_SERVICE_UNAVAILABLE;
 
             if (isset($app['raven'])) {

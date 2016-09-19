@@ -5,4 +5,6 @@ database:
 
 debug: true
 
+csrf_key: this-is-not-so-secret
+
 log_path:
