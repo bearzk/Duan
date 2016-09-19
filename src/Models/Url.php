@@ -26,7 +26,7 @@ class Url extends Model
     /**
      * @var bool customized
      */
-    public $c;
+    public $c = 0;
 
     public static function getByHash($hash)
     {
@@ -39,7 +39,7 @@ class Url extends Model
     {
         return static::objects()
             ->filter('u', '=', $url)
-            ->filter('c', '<>', true)
+            ->filter('c', '!=', true)
             ->single(true);
     }
 }

@@ -28,7 +28,7 @@ class ShortController
                 $url = new Url;
                 $url->h = $h;
                 $url->u = $u;
-                $url->c = true;
+                $url->c = 1;
                 $url->save();
             }
         } else {
@@ -43,7 +43,7 @@ class ShortController
 
         $twig = $app['twig'];
 
-        $context['url'] = $url;
+        $context['hash'] = $request->getScheme() . '://' . $request->getHost() . '/' . $url->h;
 
         return $twig->render('create.twig', ['context' => $context]);
     }
