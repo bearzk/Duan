@@ -1,0 +1,81 @@
+<?php
+
+namespace Duan;
+
+use Cicada\Application;
+use Duan\Providers\HashProvider;
+use Duan\Providers\LoggerProvider;
+use Duan\Providers\TwigProvider;
+use Phormium\DB;
+use Symfony\Component\Yaml\Parser;
+
+class DuanApp extends Application
+{
+    private $env;
+    private $projectRoot;
+    private $config;
+
+    public static $envs = [
+        'local',
+        'prod',
+        'test'
+    ];
+
+    public function __construct($env)
+    {
+        parent::__construct();
+
+        $this->env = $env;
+
+        $this->projectRoot = rtrim(getcwd(), '/public');
+    }
+
+    public function boot()
+    {
+        $this->setupLogger();
+        $this->setupTwig();
+    }
+
+    public function getEnv()
+    {
+        return $this->env;
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    public function getProjectRoot()
+    {
+        return $this->projectRoot;
+    }
+
+    public function setupLogger()
+    {
+        $lp = new LoggerProvider();
+        $lp->register($this);
+    }
+
+    public function setupTwig()
+    {
+        $tp = new TwigProvider();
+        $tp->register($this);
+    }
+
+    public function configure()
+    {
+        $configPath = $this->projectRoot . '/etc/config.yml';
+        $parser = new Parser();
+
+        $this->config = $parser->parse(file_get_contents($configPath));
+
+        $dbConfig = [
+            'databases' => [
+                'duan' => $this->config['database']
+            ]
+        ];
+
+        DB::configure($dbConfig);
+    }
+}

@@ -1,0 +1,4 @@
+/vendor/
+/.idea/
+/etc/config.yml
+/log/
