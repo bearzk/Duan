@@ -43,7 +43,13 @@ class ShortController
 
         $twig = $app['twig'];
 
-        $context['hash'] = $request->getScheme() . '://' . $request->getHost() . '/' . $url->h;
+        $hash = $request->getScheme() . '://' . $request->getHost();
+        if ('80' != $request->getPort()) {
+            $hash .= ":" . $request->getPort();
+        }
+        $hash .= '/' . $url->h;
+
+        $context['hash'] = $hash;
 
         return $twig->render('create.twig', ['context' => $context]);
     }
