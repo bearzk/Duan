@@ -2,12 +2,12 @@
 {% block content %}
     <div class="container">
         <div class="center">
-            {% if context.hash %}
+            {% if context.result %}
                 <p>
-                    {% if context.hash == 'invalid token' %}
-                        {{ context.hash }}
+                    {% if context.result == 'invalid token' %}
+                        {{ context.result }}
                     {% else %}
-                        <a href="{{ context.hash }}">{{ context.hash }}</a>
+                        <a href="{{ context.result }}">{{ context.result }}</a>
                     {% endif %}
                 </p>
             {% endif %}

@@ -28,13 +28,6 @@ class Url extends Model
      */
     public $c = 0;
 
-    public static function getByHash($hash)
-    {
-        return static::objects()
-            ->filter('h', '=', $hash)
-            ->single(true);
-    }
-
     public static function getByUrl($url)
     {
         return static::objects()

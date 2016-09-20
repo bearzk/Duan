@@ -12,11 +12,9 @@ class ShortController
 {
     public function create(DuanApp $app, Request $request)
     {
-        /** @var TokenService $csrf */
-        $csrf = $app['csrf'];
-        $token = $csrf->generate();
+        $context = [];
 
-        $context = ['token' => $token];
+        $this->addToken($app, $context);
 
         $twig = $app['twig'];
 
@@ -29,53 +27,29 @@ class ShortController
         $h = $request->get('hash');
         $t = $request->get('token');
 
-        /** @var TokenService $csrf */
+        $context = [];
         $twig = $app['twig'];
 
-        $csrf = $app['csrf'];
-        $token = $csrf->generate();
-        $context['token'] = $token;
+        $this->addToken($app, $context);
 
-        if (!$csrf->validate($t)) {
-            $context['hash'] = 'invalid token';
+        if (!$app['csrf']->validate($t)) {
+            $context['result'] = 'invalid token';
             return $twig->render('pages/create.twig', ['context' => $context]);
         }
 
         $this->checkToBack($u);
 
-        if (!empty($h)) {
-            $url = Url::getByHash($h);
-            if (empty($url)) {
-                $url = new Url;
-                $url->h = $h;
-                $url->u = $u;
-                $url->c = 1;
-                $url->save();
-            }
-        } else {
-            $url = Url::getByUrl($u);
-            if (empty($url)) {
-                $url = new Url;
-                $url->u = $u;
-                $url->h = Hash::gen($u);
-                $url->save();
-            }
-        }
+        $url = $this->saveUrl($h, $u);
 
-        $hash = $request->getScheme() . '://' . $request->getHost();
-        if ('80' != $request->getPort()) {
-            $hash .= ":" . $request->getPort();
-        }
-        $hash .= '/' . $url->h;
-
-        $context['hash'] = $hash;
+        $context['result'] = $this->buildResultUrl($request, $url);
 
         return $twig->render('pages/create.twig', ['context' => $context]);
     }
 
     public function redirect(DuanApp $app, Request $request, $hash)
     {
-        $url = Url::getByHash($hash);
+        /** @var Url $url */
+        $url = Url::find($hash);
 
         $this->checkToBack($url->u);
 
@@ -88,5 +62,48 @@ class ShortController
             header('Location: /');
             exit(0);
         }
+    }
+
+    private function addToken(DuanApp $app, Array &$context)
+    {
+        /** @var TokenService $csrf */
+        $csrf = $app['csrf'];
+        $token = $csrf->generate();
+
+        $context['token'] = $token;
+    }
+
+    private function saveUrl($h, $u)
+    {
+        if (empty($h)) {
+            $url = Url::getByUrl($u);
+        } else {
+            $url = Url::find($h);
+        }
+
+        if (empty($url)) {
+            $url = new Url;
+            $url->u = $u;
+            if (empty($h)) {
+                $url->h = Hash::gen($u);
+            } else {
+                $url->h = $h;
+                $url->c = 1;
+            }
+            $url->save();
+        }
+
+        return $url;
+    }
+
+    private function buildResultUrl(Request $request, Url $url)
+    {
+        $result = $request->getScheme() . '://' . $request->getHost();
+        if ('80' != $request->getPort()) {
+            $result .= ":" . $request->getPort();
+        }
+        $result .= '/' . $url->h;
+
+        return $result;
     }
 }
