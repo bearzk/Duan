@@ -13,7 +13,8 @@
             {% endif %}
             <form method="post">
                 <input type="hidden" name="token" value="{{ context.token }}"/>
-                <span>Url: <input type="text" name="url"/></span><input type="submit" value="Generate" />
+                <input type="text" name="url" placeholder="http://twitter.com"/>
+                <input type="submit" value="Generate" />
             </form>
         </div>
     </div>
