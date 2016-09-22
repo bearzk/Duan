@@ -8,7 +8,7 @@ use Duan\Models\Url;
 use Schnittstabil\Csrf\TokenService\TokenService;
 use Symfony\Component\HttpFoundation\Request;
 
-class ShortController
+class WebController
 {
     public function create(DuanApp $app, Request $request)
     {
