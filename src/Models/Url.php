@@ -1,6 +1,7 @@
 <?php
 namespace Duan\Models;
 
+use Duan\Lib\Hash;
 use Phormium\Model;
 
 /**
@@ -12,27 +13,63 @@ class Url extends Model
     protected static $_meta = [
         'database' => 'duan',
         'table' => 'urls',
-        'pk' => 'h'
+        'pk' => 'hash'
     ];
 
     /**
      * @var string hash
      */
-    public $h;
+    public $hash;
     /**
      * @var string url
      */
-    public $u;
+    public $url;
     /**
      * @var bool customized
      */
-    public $c = 0;
+    public $customized = 0;
 
     public static function getByUrl($url)
     {
         return static::objects()
-            ->filter('u', '=', $url)
-            ->filter('c', '!=', true)
+            ->filter('url', '=', $url)
+            ->filter('customized', '!=', true)
             ->single(true);
+    }
+
+    public static function create(array $params)
+    {
+        if (!empty($params['hash'])) {
+            $h = $params['hash'];
+        }
+
+        $u = $params['url'];
+
+        if (empty($h)) {
+            $url = static::getByUrl($u);
+        } else {
+            $url = static::find($h);
+        }
+
+        if (empty($url)) {
+            $url = new static();
+
+            $url->url = $params['url'];
+            if (empty($params['hash'])) {
+                $url->hash = Hash::gen($params['url']);
+            } else {
+                $url->hash = $params['hash'];
+                $url->customized = 1;
+            }
+
+            $url->save();
+        }
+
+        return $url;
+    }
+
+    public static function keys()
+    {
+        return get_object_vars(new static());
     }
 }

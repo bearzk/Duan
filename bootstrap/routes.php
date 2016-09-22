@@ -1,29 +1,38 @@
 <?php
 
-use Duan\Controllers\ShortController;
+use Duan\Controllers\Api\UrlController;
+use Duan\Controllers\Web\IndexController;
 
 /* ------------------------------------------------------------------
- * Web App
+ * Api Controllers
  */
 
-$app->get('/', [WebController::class, "index"])
-    ->name('duan::create');
+$api = $app['collection_factory'];
 
-//$app->post('/', [WebController::class, "save"])
-//    ->name('duan::save');
+$api->prefix('/api');
 
-$app->get('/{hash}', [WebController::class, "redirect"])
-    ->name('duan::redirect');
-
-/* ------------------------------------------------------------------
- * Api
- */
-
-$app->get('/api/duan', [ApiController::class, "index"])
+$api->get('/duan/', [UrlController::class, "index"])
     ->name('api::duan_list');
 
-$app->post('/api/duan', [ApiController::class, "save"])
+$api->post('/duan/', [UrlController::class, "save"])
     ->name('api::duan_save');
 
-$app->get('/api/duan/{hash}', [ApiController::class, "get"])
+$api->get('/duan/{hash}', [UrlController::class, "get"])
     ->name('api::duan_get_item');
+
+$app->addRouteCollection($api);
+
+/* ------------------------------------------------------------------
+ * Web Controllers
+ */
+
+$app->get('/', [IndexController::class, "index"])
+    ->name('duan::create');
+
+$app->post('/', [IndexController::class, "save"])
+    ->name('duan::save');
+
+$app->get('/{hash}', [IndexController::class, "redirect"])
+    ->name('duan::redirect');
+
+

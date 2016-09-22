@@ -1,8 +1,8 @@
 CREATE TABLE `urls` (
-  `h` varchar(40) NOT NULL,
-  `u` varchar(1024) NOT NULL,
-  `c` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`h`),
-  KEY `urls_url_index` (`u`),
-  KEY `urls_custom_index` (`c`)
+  `hash` varchar(40) NOT NULL,
+  `url` varchar(1024) NOT NULL,
+  `customized` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`hash`),
+  KEY `urls_url_index` (`url`),
+  KEY `urls_custom_index` (`customized`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
