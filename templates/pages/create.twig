@@ -7,13 +7,13 @@
                     {% if context.result == 'invalid token' %}
                         {{ context.result }}
                     {% else %}
-                        <a href="{{ context.result }}">{{ context.result }}</a>
+                        <a href="{{ context.result }}" target="_blank">{{ context.result }}</a>
                     {% endif %}
                 </p>
             {% endif %}
             <form method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
-                <span>Url: <input type="text" name="url"/></span><input type="submit" value="Generate" />
+                <input type="text" name="url" placeholder="https://www.example.com/"/><input type="submit" value="Generate" />
             </form>
         </div>
     </div>

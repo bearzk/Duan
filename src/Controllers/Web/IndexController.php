@@ -11,18 +11,15 @@ class IndexController
 {
     public function index(DuanApp $app, Request $request)
     {
-        $context = [];
-
         $twig = $app['twig'];
 
-        return $twig->render('pages/create.twig', ['context' => $context]);
+        return $twig->render('pages/create.twig');
     }
 
     public function save(DuanApp $app, Request $request)
     {
         $u = $request->get('url');
         $h = $request->get('hash');
-        $t = $request->get('csrf_token');
 
         $context = [];
         $twig = $app['twig'];
