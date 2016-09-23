@@ -1,0 +1,63 @@
+FORMAT: 1A
+HOST: http://duan.dev/
+
+# Duan
+
+Duan is a simple app to help you generate shortened urls.
+
+## Duan Collection [/api/duan]
+
+### List All Duan [GET]
+
++ Request (application/json)
+
++ Response 200 (application/json)
+
+        [
+            {
+                "hash": "awesome",
+                "url": "http://duan.dev/",
+                "customized": "1"
+            },
+            {
+                "hash": "MTUwMj",
+                "url": "https://twitter.com/",
+                "customized": "0"
+            },
+            {
+                "hash": "MWJkZT",
+                "url": "http://duan.dev/",
+                "customized": "0"
+            },
+            {
+                "hash": "t",
+                "url": "https://twitter.com/",
+                "customized": "1"
+            }
+        ]
+
+### Create a New Duan [POST]
+
+You may create your own duan using this action. It takes a JSON
+object containing a url and an optional hash.
+
++ Request (application/json)
+
+        {
+            "hash": "t",
+            "url": "https://twitter.com/"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /api/duan/t
+
+    + Body
+
+            {
+                "hash": "t",
+                "url": "https://twitter.com/",
+                "customized": "1"
+            }

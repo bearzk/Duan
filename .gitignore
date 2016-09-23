@@ -2,3 +2,4 @@
 /.idea/
 /etc/config.yml
 /log/
+dredd.yml

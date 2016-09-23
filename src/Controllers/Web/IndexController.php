@@ -1,41 +1,28 @@
 <?php
-namespace Duan\Controllers;
+namespace Duan\Controllers\Web;
 
 use Duan\DuanApp;
 use Duan\Lib\Hash;
 use Duan\Lib\UrlValidator;
 use Duan\Models\Url;
-use Schnittstabil\Csrf\TokenService\TokenService;
 use Symfony\Component\HttpFoundation\Request;
 
-class ShortController
+class IndexController
 {
-    public function create(DuanApp $app, Request $request)
+    public function index(DuanApp $app, Request $request)
     {
-        $context = [];
-
-        $this->addToken($app, $context);
-
         $twig = $app['twig'];
 
-        return $twig->render('pages/create.twig', ['context' => $context]);
+        return $twig->render('pages/create.twig');
     }
 
     public function save(DuanApp $app, Request $request)
     {
         $u = $request->get('url');
         $h = $request->get('hash');
-        $t = $request->get('token');
 
         $context = [];
         $twig = $app['twig'];
-
-        $this->addToken($app, $context);
-
-        if (!$app['csrf']->validate($t)) {
-            $context['result'] = 'invalid token';
-            return $twig->render('pages/create.twig', ['context' => $context]);
-        }
 
         $this->checkToBack($u);
 
@@ -51,9 +38,9 @@ class ShortController
         /** @var Url $url */
         $url = Url::find($hash);
 
-        $this->checkToBack($url->u);
+        $this->checkToBack($url->url);
 
-        redirect($url->u);
+        redirect($url->url);
     }
 
     private function checkToBack($url)
@@ -62,15 +49,6 @@ class ShortController
             header('Location: /');
             exit(0);
         }
-    }
-
-    private function addToken(DuanApp $app, Array &$context)
-    {
-        /** @var TokenService $csrf */
-        $csrf = $app['csrf'];
-        $token = $csrf->generate();
-
-        $context['token'] = $token;
     }
 
     private function saveUrl($h, $u)
@@ -83,12 +61,12 @@ class ShortController
 
         if (empty($url)) {
             $url = new Url;
-            $url->u = $u;
+            $url->url = $u;
             if (empty($h)) {
-                $url->h = Hash::gen($u);
+                $url->hash = Hash::gen($u);
             } else {
-                $url->h = $h;
-                $url->c = 1;
+                $url->hash = $h;
+                $url->customized = 1;
             }
             $url->save();
         }
@@ -102,7 +80,7 @@ class ShortController
         if ('80' != $request->getPort()) {
             $result .= ":" . $request->getPort();
         }
-        $result .= '/' . $url->h;
+        $result .= '/' . $url->hash;
 
         return $result;
     }
