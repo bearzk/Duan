@@ -11,10 +11,10 @@ $api = $app['collection_factory'];
 
 $api->prefix('/api');
 
-$api->get('/duan/', [UrlController::class, "index"])
+$api->get('/duan', [UrlController::class, "index"])
     ->name('api::duan_list');
 
-$api->post('/duan/', [UrlController::class, "save"])
+$api->post('/duan', [UrlController::class, "save"])
     ->name('api::duan_save');
 
 $api->get('/duan/{hash}', [UrlController::class, "get"])
