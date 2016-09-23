@@ -66,7 +66,7 @@ class IndexController
             $url = new Url;
             $url->url = $u;
             if (empty($h)) {
-                $url->url = Hash::gen($u);
+                $url->hash = Hash::gen($u);
             } else {
                 $url->hash = $h;
                 $url->customized = 1;
