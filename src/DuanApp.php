@@ -73,7 +73,7 @@ class DuanApp extends Application
 
     public function configure()
     {
-        $configPath = $this->projectRoot . '/etc/config.yml';
+        $configPath = $this->projectRoot . "/etc/$this->env.yml";
         $parser = new Parser();
 
         $this->config = $parser->parse(file_get_contents($configPath));
