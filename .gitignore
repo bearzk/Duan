@@ -1,5 +1,6 @@
 /vendor/
 /.idea/
 /etc/config.yml
+/etc/local.yml
 /log/
 dredd.yml
