@@ -23,7 +23,7 @@ CREATE TABLE `tokens` (
   `expired_at` DATE,
 
   PRIMARY KEY (`id`),
-  UNIQUE KEY `tokens_user_id` (`user_id`),
+  KEY `tokens_user_id` (`user_id`),
   KEY `tokens_revoked` (`revoked`)
 )  ENGINE=INNODB DEFAULT CHARSET=utf8;
 
