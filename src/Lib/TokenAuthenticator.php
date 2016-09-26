@@ -3,6 +3,7 @@ namespace Duan\Lib;
 
 use Duan\Models\Token;
 use Duan\Models\User;
+use Symfony\Component\HttpFoundation\Request;
 
 class TokenAuthenticator
 {
@@ -11,11 +12,12 @@ class TokenAuthenticator
      * return corresponding user when found,
      * false when NOT found.
      *
-     * @param $id
+     * @param Request $request
      * @return bool|User
      */
-    public function authenticate($id)
+    public function auth(Request $request)
     {
+        $id = $request->headers->get('access_token', '');
         /** @var Token $token */
         $token = Token::objects()
             ->filter('id', '=', $id)
