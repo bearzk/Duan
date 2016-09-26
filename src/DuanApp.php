@@ -3,6 +3,8 @@
 namespace Duan;
 
 use Cicada\Application;
+use Duan\Providers\AuthProviders\TokenAuthProvider;
+use Duan\Providers\AuthProviders\WebAuthProvider;
 use Duan\Providers\CSRFProvider;
 use Duan\Providers\HashProvider;
 use Duan\Providers\LoggerProvider;
@@ -36,6 +38,7 @@ class DuanApp extends Application
         $this->setupLogger();
         $this->setupCSRF();
         $this->setupTwig();
+        $this->setupAuth();
     }
 
     public function getEnv()
@@ -55,20 +58,29 @@ class DuanApp extends Application
 
     public function setupLogger()
     {
-        $lp = new LoggerProvider();
+        $lp = new LoggerProvider;
         $lp->register($this);
     }
 
     public function setupTwig()
     {
-        $tp = new TwigProvider();
+        $tp = new TwigProvider;
         $tp->register($this);
     }
 
     public function setupCSRF()
     {
-        $csrfp = new CSRFProvider();
+        $csrfp = new CSRFProvider;
         $csrfp->register($this);
+    }
+
+    public function setupAuth()
+    {
+        $tokenAuthProvider = new TokenAuthProvider;
+        $tokenAuthProvider->register($this);
+
+        $webAuthProvider = new WebAuthProvider;
+        $webAuthProvider->register($this);
     }
 
     public function configure()
