@@ -1,0 +1,11 @@
+{% extends "layout.twig" %}
+{% block content %}
+    <div class="container">
+        <div class="center">
+            {{ user.email }}
+            {% for token in user.tokens %}
+                {{ token }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
