@@ -13,8 +13,8 @@ class User extends BaseModel
     public $alias;
     public $email;
     public $password;
-    public $firstName;
-    public $lastName;
+    public $first_name;
+    public $last_name;
 
     public function __construct()
     {

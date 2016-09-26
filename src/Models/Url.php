@@ -62,7 +62,7 @@ class Url extends BaseModel
 
             $url->url = $params['url'];
             if (empty($params['hash'])) {
-                $url->hash = Hash::gen($params['url']);
+                $url->hash = Hash::url($params['url']);
             } else {
                 $url->hash = $params['hash'];
                 $url->customized = 1;

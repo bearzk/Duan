@@ -12,7 +12,7 @@ class Token extends BaseModel
     public $id;
     public $user_id;
     public $name;
-    public $revoked;
+    public $revoked = 0;
     public $expired_at;
 
     public function __construct()
@@ -23,7 +23,7 @@ class Token extends BaseModel
     public function getUser()
     {
         return User::objects()
-          ->filter('user_id', '=', $this->user_id)
-          ->single(ture);
+          ->filter('id', '=', $this->user_id)
+          ->single(true);
     }
 }
