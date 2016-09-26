@@ -10,7 +10,7 @@ class TokenAuthProvider implements ServiceProviderInterface
     {
         $container['token_auth'] = function () use ($container) {
           return new TokenAuthenticator;
-        }
+        };
     }
 
 }
