@@ -1,8 +1,7 @@
 <?php
 namespace Duan\Models;
-use Phormium\Model;
 
-class Token extends Model
+class Token extends BaseModel
 {
     protected static $_meta = [
         'database' => 'duan',
@@ -14,9 +13,12 @@ class Token extends Model
     public $user_id;
     public $name;
     public $revoked;
-    public $created_at;
-    public $updated_at;
     public $expired_at;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function getUser()
     {

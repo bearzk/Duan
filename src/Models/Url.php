@@ -1,6 +1,7 @@
 <?php
 namespace Duan\Models;
 
+use Carbon\Carbon;
 use Duan\Lib\Hash;
 use Phormium\Model;
 
@@ -8,7 +9,7 @@ use Phormium\Model;
  * Class Url
  * @package Duan\Models
  */
-class Url extends Model
+class Url extends BaseModel
 {
     protected static $_meta = [
         'database' => 'duan',
@@ -28,6 +29,11 @@ class Url extends Model
      * @var bool customized
      */
     public $customized = 0;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public static function getByUrl($url)
     {

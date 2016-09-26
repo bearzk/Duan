@@ -1,8 +1,7 @@
 <?php
 namespace Duan\Models;
-use Phormium\Model;
 
-class User extends Model
+class User extends BaseModel
 {
     protected static $_meta = [
         'database' => 'duan',
@@ -13,6 +12,13 @@ class User extends Model
     public $id;
     public $alias;
     public $email;
-    public $fisrtName;
+    public $password;
+    public $firstName;
     public $lastName;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
 }
