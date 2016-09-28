@@ -3,18 +3,49 @@ namespace Duan\Controllers\Web;
 
 use Duan\DuanApp;
 use Duan\Lib\Authenticator;
+use Duan\Models\User;
 use Symfony\Component\HttpFoundation\Request;
 
 class AuthController
 {
     public function signupForm(DuanApp $app, Request $request)
     {
-
+        /** @var \Twig_Environment $view */
+        $view = $app['twig'];
+        return $view->render('pages/signup.twig');
     }
 
     public function signup(DuanApp $app, Request $request)
     {
+        $view = $app['twig'];
+        $email = $request->get('email');
+        $password = $request->get('password');
+        $alias = $request->get('alias');
+        $firstName = $request->get('first_name');
+        $lastName = $request->get('last_name');
 
+        var_dump($email, $password, $alias, $firstName, $lastName);
+
+        if (!$email || !$password || !$alias) {
+            return $view->render('pages/signup.twig');
+        }
+
+        $user = new User;
+        $user->email = $email;
+        $user->password = password_hash($password, PASSWORD_BCRYPT);
+        $user->alias = $alias;
+
+        if ($firstName) {
+            $user->first_name = $firstName;
+        }
+
+        if ($lastName) {
+            $user->last_name = $lastName;
+        }
+
+        $user->save();
+
+        redirect('/signin');
     }
 
     public function signinForm(DuanApp $app, Request $request)
