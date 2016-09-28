@@ -1,6 +1,7 @@
 <?php
 
 use Duan\Controllers\Api\UrlController;
+use Duan\Controllers\Web\AuthController;
 use Duan\Controllers\Web\IndexController;
 
 /* ------------------------------------------------------------------
@@ -34,9 +35,6 @@ $app->get('/', [IndexController::class, "index"])
 $app->post('/', [IndexController::class, "save"])
     ->name('duan::save');
 
-$app->get('/{hash}', [IndexController::class, "redirect"])
-    ->name('duan::redirect');
-
 // authentication
 
 $app->get('/signin', [AuthController::class, "signinForm"])
@@ -58,3 +56,6 @@ $app->post('/signout', [AuthController::class, "signOut"])
 
 $app->get('/user/{id}', [UserController::class, "show"])
     ->name('user::show');
+
+$app->get('/{hash}', [IndexController::class, "redirect"])
+    ->name('duan::redirect');
