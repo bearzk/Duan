@@ -16,8 +16,22 @@ class Authenticator
      */
     public function auth(Request $request)
     {
-        // TODO
-        // success User
-        // fail false
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        /** @var User $user */
+        $user = User::objects()
+            ->filter('email', '=', $email)
+            ->single(true);
+
+        if (!$user) {
+            return false;
+        }
+
+        if (password_verify($password, $user->password)) {
+            return $user;
+        }
+
+        return false;
     }
 }

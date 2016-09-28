@@ -3,6 +3,7 @@
 use Duan\Controllers\Api\UrlController;
 use Duan\Controllers\Web\AuthController;
 use Duan\Controllers\Web\IndexController;
+use Duan\Controllers\Web\UserController;
 
 /* ------------------------------------------------------------------
  * Api Controllers
@@ -40,7 +41,7 @@ $app->post('/', [IndexController::class, "save"])
 $app->get('/signin', [AuthController::class, "signinForm"])
     ->name('auth::signin_form');
 
-$app->post('/login', [AuthController::class, "signin"])
+$app->post('/signin', [AuthController::class, "signin"])
     ->name('auth::signin');
 
 $app->get('/signup', [AuthController::class, 'signupForm'])

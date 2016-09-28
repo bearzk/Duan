@@ -14,9 +14,4 @@ class Hash
             $head, 6);
         return $hash;
     }
-
-    public static function password($password)
-    {
-        // TODO
-    }
 }

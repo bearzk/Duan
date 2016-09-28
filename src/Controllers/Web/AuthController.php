@@ -2,6 +2,7 @@
 namespace Duan\Controllers\Web;
 
 use Duan\DuanApp;
+use Duan\Lib\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
 
 class AuthController
@@ -25,7 +26,13 @@ class AuthController
 
     public function signin(DuanApp $app, Request $request)
     {
-
+        /** @var Authenticator $auth */
+        $auth = $app['auth'];
+        $user = $auth->auth($request);
+        if ($user) {
+            redirect("/user/$user->id");
+        }
+        redirect('/signin');
     }
 
     public function signout(DuanApp $app, Request $request)

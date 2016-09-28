@@ -6,6 +6,7 @@ use Duan\Console\UserCreator;
 require __DIR__ . "/vendor/autoload.php";
 
 $app = new Application();
+$app->setName('Rogue. cli to manage Duan application.');
 
 $app->add(new UserCreator());
 

@@ -61,8 +61,7 @@ class UserCreator extends Command
         $user = new User;
 
         $user->email = $email;
-        // TODO: generate password properly
-        $user->password = $password;
+        $user->password = password_hash($password, PASSWORD_BCRYPT);
 
         if ($alias) {
             $user->alias = $alias;

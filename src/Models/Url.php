@@ -1,9 +1,7 @@
 <?php
 namespace Duan\Models;
 
-use Carbon\Carbon;
 use Duan\Lib\Hash;
-use Phormium\Model;
 
 /**
  * Class Url
