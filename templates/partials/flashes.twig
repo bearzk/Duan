@@ -1,0 +1,7 @@
+{% if flashes %}
+    {% for flash in flashes %}
+        <p class="{{ flash.type }}">
+          {{ flash.message }}
+        </p>
+    {% endfor %}
+{% endif %}

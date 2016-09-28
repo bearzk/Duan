@@ -3,7 +3,7 @@ namespace Duan\Lib;
 
 class Hash
 {
-    public static function gen($url)
+    public static function url($url)
     {
         $head = rand(0, 80);
         $hash = substr(
@@ -13,5 +13,10 @@ class Hash
                 base64_encode(hash('sha256', $url))),
             $head, 6);
         return $hash;
+    }
+
+    public static function password($password)
+    {
+        // TODO
     }
 }

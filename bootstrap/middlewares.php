@@ -1,6 +1,7 @@
 <?php
 
 use Duan\DuanApp;
+use Duan\Lib\TokenAuthenticator;
 use Schnittstabil\Csrf\TokenService\TokenService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,8 +29,10 @@ $app->before($logRequest);
 $app->after($logResponse);
 
 /* ------------------------------------------------------------------
- * Api Content-Type: application/json
+ * Api
  */
+
+// Content-Type: application/json
 
 $checkApiContentType = function (DuanApp $app, Request $request) {
     $path = $request->getPathInfo();
@@ -43,6 +46,23 @@ $checkApiContentType = function (DuanApp $app, Request $request) {
 };
 
 $app->before($checkApiContentType);
+
+// Token Auth
+
+$tokenAuth = function (DuanApp $app, Request $request) {
+    $path = $request->getPathInfo();
+    $pathArr = explode('/', $path);
+    /** @var TokenAuthenticator $tokenAuth*/
+    $tokenAuth = $app['token_auth'];
+    if ('api' == $pathArr[1] && !$tokenAuth->auth($request)) {
+        return new JsonResponse (
+            ["message" => "Forbidden"],
+            Response::HTTP_FORBIDDEN
+        );
+    }
+};
+
+$app->before($tokenAuth);
 
 /* ------------------------------------------------------------------
  * CSRF token

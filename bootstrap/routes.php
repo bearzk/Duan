@@ -26,6 +26,8 @@ $app->addRouteCollection($api);
  * Web Controllers
  */
 
+// basic
+
 $app->get('/', [IndexController::class, "index"])
     ->name('duan::create');
 
@@ -35,4 +37,24 @@ $app->post('/', [IndexController::class, "save"])
 $app->get('/{hash}', [IndexController::class, "redirect"])
     ->name('duan::redirect');
 
+// authentication
 
+$app->get('/signin', [AuthController::class, "signinForm"])
+    ->name('auth::signin_form');
+
+$app->post('/login', [AuthController::class, "signin"])
+    ->name('auth::signin');
+
+$app->get('/signup', [AuthController::class, 'signupForm'])
+    ->name('auth::signup_form');
+
+$app->post('/signup', [AuthController::class, "signup"])
+    ->name('auth::signup');
+
+$app->post('/signout', [AuthController::class, "signOut"])
+    ->name('auth::signout');
+
+// user
+
+$app->get('/user/{id}', [UserController::class, "show"])
+    ->name('user::show');
