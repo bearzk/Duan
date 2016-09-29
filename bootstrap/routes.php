@@ -1,5 +1,6 @@
 <?php
 
+use Cicada\Routing\RouteCollection;
 use Duan\Controllers\Api\UrlController;
 use Duan\Controllers\Web\AuthController;
 use Duan\Controllers\Web\IndexController;
@@ -9,18 +10,22 @@ use Duan\Controllers\Web\UserController;
  * Api Controllers
  */
 
+/** @var RouteCollection $api */
 $api = $app['collection_factory'];
 
-$api->prefix('/api');
+$api->prefix('/api/');
 
-$api->get('/duan', [UrlController::class, "index"])
+$api->get('duan', [UrlController::class, "index"])
     ->name('api::duan_list');
 
-$api->post('/duan', [UrlController::class, "save"])
+$api->post('duan', [UrlController::class, "save"])
     ->name('api::duan_save');
 
-$api->get('/duan/{hash}', [UrlController::class, "get"])
+$api->get('duan/{hash}', [UrlController::class, "get"])
     ->name('api::duan_get_item');
+
+$api->before($checkApiContentType);
+$api->before($tokenAuth);
 
 $app->addRouteCollection($api);
 
@@ -30,33 +35,42 @@ $app->addRouteCollection($api);
 
 // basic
 
-$app->get('/', [IndexController::class, "index"])
+/** @var RouteCollection $web */
+$web = $app['collection_factory'];
+
+$web->prefix('/');
+
+$web->get('', [IndexController::class, "index"])
     ->name('duan::create');
 
-$app->post('/', [IndexController::class, "save"])
+$web->post('', [IndexController::class, "save"])
     ->name('duan::save');
 
 // authentication
 
-$app->get('/signin', [AuthController::class, "signinForm"])
+$web->get('signin', [AuthController::class, "signinForm"])
     ->name('auth::signin_form');
 
-$app->post('/signin', [AuthController::class, "signin"])
+$web->post('signin', [AuthController::class, "signin"])
     ->name('auth::signin');
 
-$app->get('/signup', [AuthController::class, 'signupForm'])
+$web->get('signup', [AuthController::class, 'signupForm'])
     ->name('auth::signup_form');
 
-$app->post('/signup', [AuthController::class, "signup"])
+$web->post('signup', [AuthController::class, "signup"])
     ->name('auth::signup');
 
-$app->post('/signout', [AuthController::class, "signOut"])
+$web->post('signout', [AuthController::class, "signOut"])
     ->name('auth::signout');
 
 // user
 
-$app->get('/user/{id}', [UserController::class, "show"])
+$web->get('user/{id}', [UserController::class, "show"])
     ->name('user::show');
 
-$app->get('/{hash}', [IndexController::class, "redirect"])
+$web->get('{hash}', [IndexController::class, "redirect"])
     ->name('duan::redirect');
+
+$web->before($CSRFVerifyAndGenerate);
+
+$app->addRouteCollection($web);

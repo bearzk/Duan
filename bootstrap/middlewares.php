@@ -35,9 +35,7 @@ $app->after($logResponse);
 // Content-Type: application/json
 
 $checkApiContentType = function (DuanApp $app, Request $request) {
-    $path = $request->getPathInfo();
-    $pathArr = explode('/', $path);
-    if ('json' != $request->getContentType() && 'api' == $pathArr[1]) {
+    if ('json' != $request->getContentType()) {
         return new JsonResponse(
             ["message" => "Unsupported Media Type"],
             Response::HTTP_UNSUPPORTED_MEDIA_TYPE
@@ -45,16 +43,13 @@ $checkApiContentType = function (DuanApp $app, Request $request) {
     }
 };
 
-$app->before($checkApiContentType);
 
 // Token Auth
 
 $tokenAuth = function (DuanApp $app, Request $request) {
-    $path = $request->getPathInfo();
-    $pathArr = explode('/', $path);
     /** @var TokenAuthenticator $tokenAuth*/
     $tokenAuth = $app['token_auth'];
-    if ('api' == $pathArr[1] && !$tokenAuth->auth($request)) {
+    if (!$tokenAuth->auth($request)) {
         return new JsonResponse (
             ["message" => "Forbidden"],
             Response::HTTP_FORBIDDEN
@@ -62,25 +57,19 @@ $tokenAuth = function (DuanApp $app, Request $request) {
     }
 };
 
-$app->before($tokenAuth);
-
 /* ------------------------------------------------------------------
  * CSRF token
  */
 
 $CSRFVerifyAndGenerate = function (DuanApp $app, Request $request) {
-    $path = $request->getPathInfo();
-    $pathArr = explode('/', $path);
-
     /** @var TokenService $csrf */
     $csrf = $app['csrf'];
     /** @var Twig_Environment $twig */
     $twig = $app['twig'];
 
-    if ('api' != $pathArr[1]) {
-        $twig->addGlobal('csrf_token', $csrf->generate());
-    }
-    if ('POST' == $request->getMethod() && 'api' != $pathArr[1]) {
+    $twig->addGlobal('csrf_token', $csrf->generate());
+
+    if ('POST' == $request->getMethod()) {
         if (!$csrf->validate($request->get('csrf_token'))) {
             $error = [
                 'message' => 'invalid csrf token.',
@@ -96,5 +85,3 @@ $CSRFVerifyAndGenerate = function (DuanApp $app, Request $request) {
         }
     }
 };
-
-$app->before($CSRFVerifyAndGenerate);
