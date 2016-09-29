@@ -11,9 +11,9 @@ class IndexController
 {
     public function index(DuanApp $app, Request $request)
     {
-        $twig = $app['twig'];
+        $view = $app['twig'];
 
-        return $twig->render('pages/create.twig');
+        return $view->render('pages/create.twig');
     }
 
     public function save(DuanApp $app, Request $request)
@@ -22,7 +22,7 @@ class IndexController
         $h = $request->get('hash');
 
         $context = [];
-        $twig = $app['twig'];
+        $view = $app['twig'];
 
         $this->checkToBack($u);
 
@@ -30,7 +30,7 @@ class IndexController
 
         $context['result'] = $this->buildResultUrl($request, $url);
 
-        return $twig->render('pages/create.twig', ['context' => $context]);
+        return $view->render('pages/create.twig', ['context' => $context]);
     }
 
     public function redirect(DuanApp $app, Request $request, $hash)
