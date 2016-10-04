@@ -24,8 +24,6 @@ class AuthController
         $firstName = $request->get('first_name');
         $lastName = $request->get('last_name');
 
-        var_dump($email, $password, $alias, $firstName, $lastName);
-
         if (!$email || !$password || !$alias) {
             return $view->render('pages/signup.twig');
         }
