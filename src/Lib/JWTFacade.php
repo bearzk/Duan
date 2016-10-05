@@ -30,11 +30,13 @@ class JWTFacade
             }
         }
 
-        $builder->setIssuedAt(time());
+        $time = time();
+
+        $builder->setIssuedAt($time);
 
         $days = !empty($this->config['exp']) ? $this->config['exp'] : 90;
         $exp = 3600 * 24 * $days;
-        $builder->setExpiration($exp);
+        $builder->setExpiration($time + $exp);
 
         foreach ($claims as $k => $v) {
             $builder->set($k, $v);

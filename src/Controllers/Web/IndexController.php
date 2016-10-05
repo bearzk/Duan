@@ -14,17 +14,6 @@ class IndexController
     {
         $view = $app['twig'];
 
-        $claims = [
-            'name' => 'kai',
-            'age' => 31
-        ];
-
-        /** @var JWTFacade $jwt */
-        $jwt = $app['jwt'];
-        $token = $jwt->build($claims);
-
-        var_dump($jwt->validate($token));
-
         return $view->render('pages/create.twig');
     }
 
