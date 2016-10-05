@@ -4,7 +4,8 @@ use Cicada\Routing\RouteCollection;
 use Duan\Controllers\Api\UrlController;
 use Duan\Controllers\Web\AuthController;
 use Duan\Controllers\Web\IndexController;
-use Duan\Controllers\Web\UserController;
+use Duan\Controllers\Web;
+use Duan\Controllers\Api;
 
 /* ------------------------------------------------------------------
  * Api Controllers
@@ -24,8 +25,17 @@ $api->post('duan', [UrlController::class, "save"])
 $api->get('duan/{hash}', [UrlController::class, "get"])
     ->name('api::duan_get_item');
 
+$api->get('user', [Api\UserController::class, 'get'])
+    ->name('api::user');
+
+$api->get('user/tokens', [Api\UserController::class, 'tokens'])
+    ->name('api::user_tokens');
+
+$api->post('user/tokens', [Api\UserController::class, 'newToken'])
+    ->name('api::user_new_token');
+
 $api->before($checkApiContentType);
-$api->before($tokenAuth);
+$api->before($apiTokenAuth);
 
 $app->addRouteCollection($api);
 
@@ -65,7 +75,7 @@ $web->post('signout', [AuthController::class, "signOut"])
 
 // user
 
-$web->get('user/{id}', [UserController::class, "show"])
+$web->get('user/{id}', [Web\UserController::class, "show"])
     ->name('user::show');
 
 $web->get('{hash}', [IndexController::class, "redirect"])

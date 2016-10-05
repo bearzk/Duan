@@ -46,7 +46,7 @@ $checkApiContentType = function (DuanApp $app, Request $request) {
 
 // Token Auth
 
-$tokenAuth = function (DuanApp $app, Request $request) {
+$apiTokenAuth = function (DuanApp $app, Request $request) {
     /** @var TokenAuthenticator $tokenAuth*/
     $tokenAuth = $app['token_auth'];
     if (!$tokenAuth->auth($request)) {

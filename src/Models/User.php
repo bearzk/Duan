@@ -21,4 +21,12 @@ class User extends BaseModel
         parent::__construct();
     }
 
+    public function tokens()
+    {
+        $tokens = Token::objects()
+            ->filter('user_id', '=', $this->id)
+            ->fetch();
+
+        return $tokens;
+    }
 }
