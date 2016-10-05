@@ -7,8 +7,10 @@ use Duan\Providers\AuthProviders\TokenAuthProvider;
 use Duan\Providers\AuthProviders\WebAuthProvider;
 use Duan\Providers\CSRFProvider;
 use Duan\Providers\HashProvider;
+use Duan\Providers\JWTProvider;
 use Duan\Providers\LoggerProvider;
 use Duan\Providers\TwigProvider;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Phormium\DB;
 use Symfony\Component\Yaml\Parser;
 
@@ -39,6 +41,7 @@ class DuanApp extends Application
         $this->setupCSRF();
         $this->setupTwig();
         $this->setupAuth();
+        $this->setupJWT();
     }
 
     public function getEnv()
@@ -72,6 +75,13 @@ class DuanApp extends Application
     {
         $csrfp = new CSRFProvider;
         $csrfp->register($this);
+    }
+
+    public function setupJWT()
+    {
+        $signer = new Sha256;
+        $jwtp = new JWTProvider();
+        $jwtp->register($this, $signer);
     }
 
     public function setupAuth()

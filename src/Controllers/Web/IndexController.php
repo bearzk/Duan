@@ -3,6 +3,7 @@ namespace Duan\Controllers\Web;
 
 use Duan\DuanApp;
 use Duan\Lib\Hash;
+use Duan\Lib\JWTFacade;
 use Duan\Lib\UrlValidator;
 use Duan\Models\Url;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +13,17 @@ class IndexController
     public function index(DuanApp $app, Request $request)
     {
         $view = $app['twig'];
+
+        $claims = [
+            'name' => 'kai',
+            'age' => 31
+        ];
+
+        /** @var JWTFacade $jwt */
+        $jwt = $app['jwt'];
+        $token = $jwt->build($claims);
+
+        var_dump($jwt->validate($token));
 
         return $view->render('pages/create.twig');
     }
