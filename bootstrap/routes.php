@@ -81,6 +81,6 @@ $web->get('user/{id}', [Web\UserController::class, "show"])
 $web->get('{hash}', [IndexController::class, "redirect"])
     ->name('duan::redirect');
 
-$web->before($CSRFVerifyAndGenerate);
+$web->before($CSRFVerify);
 
 $app->addRouteCollection($web);

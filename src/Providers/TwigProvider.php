@@ -3,6 +3,7 @@ namespace Duan\Providers;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Schnittstabil\Csrf\TokenService\TokenService;
 use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
@@ -27,6 +28,10 @@ class TwigProvider implements ServiceProviderInterface
             }
 
             $twig->addGlobal('config', $config);
+
+            /** @var TokenService $csrf */
+            $csrf = $container['csrf'];
+            $twig->addGlobal('csrf_token', $csrf->generate());
 
             return $twig;
         };

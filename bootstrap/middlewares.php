@@ -61,13 +61,11 @@ $apiTokenAuth = function (DuanApp $app, Request $request) {
  * CSRF token
  */
 
-$CSRFVerifyAndGenerate = function (DuanApp $app, Request $request) {
+$CSRFVerify = function (DuanApp $app, Request $request) {
     /** @var TokenService $csrf */
     $csrf = $app['csrf'];
     /** @var Twig_Environment $twig */
     $twig = $app['twig'];
-
-    $twig->addGlobal('csrf_token', $csrf->generate());
 
     if ('POST' == $request->getMethod()) {
         if (!$csrf->validate($request->get('csrf_token'))) {

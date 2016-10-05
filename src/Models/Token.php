@@ -20,6 +20,11 @@ class Token extends BaseModel
         parent::__construct();
     }
 
+    public function __toString()
+    {
+        return implode(" ", [$this->id, $this->expired_at]);
+    }
+
     public function getUser()
     {
         return User::objects()
