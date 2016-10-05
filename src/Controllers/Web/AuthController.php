@@ -4,6 +4,7 @@ namespace Duan\Controllers\Web;
 use Duan\DuanApp;
 use Duan\Lib\Authenticator;
 use Duan\Models\User;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AuthController
@@ -59,7 +60,9 @@ class AuthController
         $auth = $app['auth'];
         $user = $auth->auth($request);
         if ($user) {
-            redirect("/user/$user->id");
+            // TODO: generate jwt and put in header
+            // /user/user->id should be protected by jwt auth
+            redirect("/user/$user->id", headers);
         }
         redirect('/signin');
     }

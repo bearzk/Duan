@@ -1,7 +1,7 @@
 <?php
 
-function redirect($url) {
-    header('HTTP/1.1 302 Found');
-    header("Location: {$url}");
-    exit(0);
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+function redirect($url, $headers = []) {
+    return new RedirectResponse($url, 302, $headers);
 }
