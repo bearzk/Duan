@@ -79,6 +79,7 @@ $web->get('user/{id}', [Web\UserController::class, "show"])
     ->name('user::show');
 
 $web->get('{hash}', [IndexController::class, "redirect"])
+    ->assert('hash', '[a-zA-Z0-9]+')
     ->name('duan::redirect');
 
 $web->before($CSRFVerify);

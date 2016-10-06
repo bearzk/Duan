@@ -3,7 +3,6 @@ namespace Duan\Controllers\Web;
 
 use Duan\DuanApp;
 use Duan\Lib\Hash;
-use Duan\Lib\JWTFacade;
 use Duan\Lib\UrlValidator;
 use Duan\Models\Url;
 use Symfony\Component\HttpFoundation\Request;

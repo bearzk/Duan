@@ -3,6 +3,8 @@
 namespace Duan;
 
 use Cicada\Application;
+use Cicada\Routing\Route;
+use Cicada\Routing\Router;
 use Duan\Providers\AuthProviders\TokenAuthProvider;
 use Duan\Providers\AuthProviders\WebAuthProvider;
 use Duan\Providers\CSRFProvider;
@@ -10,6 +12,7 @@ use Duan\Providers\HashProvider;
 use Duan\Providers\JWTProvider;
 use Duan\Providers\LoggerProvider;
 use Duan\Providers\TwigProvider;
+use Evenement\EventEmitter;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Phormium\DB;
 use Symfony\Component\Yaml\Parser;
@@ -42,6 +45,7 @@ class DuanApp extends Application
         $this->setupTwig();
         $this->setupAuth();
         $this->setupJWT();
+        $this->setupEvents();
     }
 
     public function getEnv()
@@ -91,6 +95,16 @@ class DuanApp extends Application
 
         $webAuthProvider = new WebAuthProvider;
         $webAuthProvider->register($this);
+    }
+
+    public function setupEvents()
+    {
+        /** @var EventEmitter $emitter */
+        $emitter = $this['emitter'];
+
+        $emitter->on(Router::EVENT_MATCH, function ($app, $request, Route $route) {
+            $this['logger']->info($route->getName());
+        });
     }
 
     public function configure()

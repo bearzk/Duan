@@ -62,7 +62,7 @@ class AuthController
         if ($user) {
             // TODO: generate jwt and put in header
             // /user/user->id should be protected by jwt auth
-            redirect("/user/$user->id", headers);
+            redirect("/user/$user->id");
         }
         redirect('/signin');
     }
