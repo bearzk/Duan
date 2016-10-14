@@ -2,6 +2,8 @@
 namespace Duan\Console;
 
 use Duan\DuanApp;
+use Duan\Lib\JWTFacade;
+use Duan\Models\Token;
 use Duan\Models\User;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -51,6 +53,7 @@ class UserCreator extends Command
     {
         $duan = new DuanApp($input->getArgument('env'));
         $duan->configure();
+        $duan->boot();
 
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');
@@ -76,10 +79,25 @@ class UserCreator extends Command
         try {
             $user->save();
             $output->writeln("User identified with $user->email created.");
+            $token = $this->createToken($duan, $user);
+            $output->writeln("Access Token $token->id created.");
         } catch (\Exception $e) {
             $output->writeln($e->getMessage());
         }
 
+    }
+
+    protected function createToken(DuanApp $app, User $user)
+    {
+        /** @var JWTFacade $jwt */
+        $jwt = $app['jwt'];
+        $token = new Token();
+        $token->user_id = $user->id;
+        $token->id = (string) $jwt->build();
+        $token->name = 'personal';
+
+        $token->save();
+        return $token;
     }
 
 }
