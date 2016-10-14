@@ -18,7 +18,7 @@ class JWTFacade
         $this->signer = $signer;
     }
 
-    public function build($claims)
+    public function build($claims = [], $expireInDays = 0)
     {
         $builder = new Builder;
 
@@ -34,12 +34,16 @@ class JWTFacade
 
         $builder->setIssuedAt($time);
 
-        $days = !empty($this->config['exp']) ? $this->config['exp'] : 90;
-        $exp = 3600 * 24 * $days;
-        $builder->setExpiration($time + $exp);
+        if (0 != $expireInDays) {
+            $days = !empty($this->config['exp']) ? $this->config['exp'] : 90;
+            $exp = 3600 * 24 * $days;
+            $builder->setExpiration($time + $exp);
+        }
 
-        foreach ($claims as $k => $v) {
-            $builder->set($k, $v);
+        if (!empty($claims)) {
+            foreach ($claims as $k => $v) {
+                $builder->set($k, $v);
+            }
         }
 
         if (!empty($this->config['sign_key'])) {

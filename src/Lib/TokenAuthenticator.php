@@ -17,7 +17,11 @@ class TokenAuthenticator
      */
     public function auth(Request $request)
     {
-        $id = $request->headers->get('access_token', '');
+        $authHeader = $request->headers->get('Authorization', '');
+        if (empty($authHeader)) {
+            return false;
+        }
+        $id = explode(" ", $authHeader)[1];
         /** @var Token $token */
         $token = Token::objects()
             ->filter('id', '=', $id)
