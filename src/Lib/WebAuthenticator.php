@@ -4,7 +4,7 @@ namespace Duan\Lib;
 use Duan\Models\User;
 use Symfony\Component\HttpFoundation\Request;
 
-class Authenticator
+class WebAuthenticator
 {
     /**
      * Authenticate by token id.
