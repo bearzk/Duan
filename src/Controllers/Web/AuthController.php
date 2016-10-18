@@ -2,7 +2,9 @@
 namespace Duan\Controllers\Web;
 
 use Duan\DuanApp;
+use Duan\Exceptions\InvalidArgumentException;
 use Duan\Lib\Authenticator;
+use Duan\Lib\WebAuthenticator;
 use Duan\Models\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,24 +27,11 @@ class AuthController
         $firstName = $request->get('first_name');
         $lastName = $request->get('last_name');
 
-        if (!$email || !$password || !$alias) {
+        try {
+            User::create($app['jwt'], $email, $password, $alias, $firstName, $lastName, true, 'personal');
+        } catch (InvalidArgumentException $ex) {
             return $view->render('pages/signup.twig');
         }
-
-        $user = new User;
-        $user->email = $email;
-        $user->password = password_hash($password, PASSWORD_BCRYPT);
-        $user->alias = $alias;
-
-        if ($firstName) {
-            $user->first_name = $firstName;
-        }
-
-        if ($lastName) {
-            $user->last_name = $lastName;
-        }
-
-        $user->save();
 
         redirect('/signin');
     }
@@ -56,7 +45,7 @@ class AuthController
 
     public function signin(DuanApp $app, Request $request)
     {
-        /** @var Authenticator $auth */
+        /** @var WebAuthenticator $auth */
         $auth = $app['auth'];
         $user = $auth->auth($request);
         if ($user) {

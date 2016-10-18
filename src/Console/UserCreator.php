@@ -2,6 +2,7 @@
 namespace Duan\Console;
 
 use Duan\DuanApp;
+use Duan\Exceptions\InvalidArgumentException;
 use Duan\Lib\JWTFacade;
 use Duan\Models\Token;
 use Duan\Models\User;
@@ -61,43 +62,14 @@ class UserCreator extends Command
         $firstName = $input->getArgument('first_name');
         $lastName = $input->getArgument('last_name');
 
-        $user = new User;
-
-        $user->email = $email;
-        $user->password = password_hash($password, PASSWORD_BCRYPT);
-
-        if ($alias) {
-            $user->alias = $alias;
-        }
-        if ($firstName) {
-            $user->first_name = $firstName;
-        }
-        if ($lastName) {
-            $user->last_name = $lastName;
-        }
+        $user = User::create($duan['jwt'], $email, $password, $alias, $firstName, $lastName, true, 'personal');
 
         try {
             $user->save();
             $output->writeln("User identified with $user->email created.");
-            $token = $this->createToken($duan, $user);
-            $output->writeln("Access Token $token->id created.");
         } catch (\Exception $e) {
             $output->writeln($e->getMessage());
         }
 
     }
-
-    protected function createToken(DuanApp $app, User $user)
-    {
-        /** @var JWTFacade $jwt */
-        $jwt = $app['jwt'];
-        $token = new Token();
-        $token->user_id = $user->id;
-        $token->id = (string) $jwt->build(['email' => $user->email]);
-        $token->name = 'personal';
-
-        $token->save();
-        return $token;
-    }
-
 }
