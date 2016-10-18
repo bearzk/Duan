@@ -93,7 +93,7 @@ class UserCreator extends Command
         $jwt = $app['jwt'];
         $token = new Token();
         $token->user_id = $user->id;
-        $token->id = (string) $jwt->build();
+        $token->id = (string) $jwt->build(['email' => $user->email]);
         $token->name = 'personal';
 
         $token->save();
