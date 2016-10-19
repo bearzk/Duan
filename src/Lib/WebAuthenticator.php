@@ -1,13 +1,22 @@
 <?php
 namespace Duan\Lib;
 
+use Duan\DuanApp;
 use Duan\Models\User;
 use Symfony\Component\HttpFoundation\Request;
 
 class WebAuthenticator
 {
+    /** @var JWTFacade $jwt */
+    private $jwt;
+
+    public function __construct(DuanApp $app)
+    {
+        $this->jwt = $app['jwt'];
+    }
+
     /**
-     * Authenticate by token id.
+     * Authenticate by email password combination
      * return corresponding user when found,
      * false when NOT found.
      *

@@ -9,7 +9,7 @@ class WebAuthProvider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $container['auth'] = function () use ($container) {
-          return new WebAuthenticator();
+          return new WebAuthenticator($container);
         };
     }
 
