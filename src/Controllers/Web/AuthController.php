@@ -58,8 +58,9 @@ class AuthController
 
             $expiresIn = 14;
             $token = (string) $jwt->build(['email' => $user->email, 'login' => true], $expiresIn);
-            $res = new RedirectResponse("/user/$user->id");
-            $res->headers->setCookie(new Cookie('session', $token, time() + 3600 * 24 * $expiresIn));
+            $res = new RedirectResponse("/user");
+            $cookie = new Cookie('session', $token, time() + 3600 * 24 * $expiresIn, '/', '.' . $app->getConfig()['base_domain']);
+            $res->headers->setCookie($cookie);
             return $res;
         }
         redirect('/signin');
@@ -67,6 +68,9 @@ class AuthController
 
     public function signout(DuanApp $app, Request $request)
     {
-
+        $res = new RedirectResponse("/");
+        $cookie = new Cookie('session', '', 0, '/', '.' . $app->getConfig()['base_domain']);
+        $res->headers->setCookie($cookie);
+        return $res;
     }
 }
