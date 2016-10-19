@@ -9,9 +9,28 @@ use Duan\Controllers\Web;
  * Web Controllers
  */
 
-// open
-/** @var RouteCollection $open */
+// restricted
 
+/** @var RouteCollection $restricted */
+$restricted = $app['collection_factory'];
+
+$restricted->prefix('/');
+
+$restricted->get('user', [Web\UserController::class, "show"])
+    ->name('user::show');
+
+$restricted->get('signout', [AuthController::class, "signout"])
+    ->name('auth::signout');
+
+$restricted->before($CSRFVerify);
+$restricted->before($webCookieAuth);
+
+$app->addRouteCollection($restricted);
+
+
+// open
+
+/** @var RouteCollection $open */
 $open = $app['collection_factory'];
 
 $open->prefix('/');
@@ -45,19 +64,3 @@ $open->before($CSRFVerify);
 
 $app->addRouteCollection($open);
 
-// restricted
-
-$restricted = $app['collection_factory'];
-
-$restricted->prefix('/');
-
-    $restricted->get('user/{id}', [Web\UserController::class, "show"])
-        ->name('user::show');
-
-    $restricted->post('signout', [AuthController::class, "signOut"])
-        ->name('auth::signout');
-
-$restricted->before($CSRFVerify);
-$restricted->before($webCookieAuth);
-
-$app->addRouteCollection($restricted);

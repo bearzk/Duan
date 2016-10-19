@@ -2,6 +2,7 @@
 
 use Duan\DuanApp;
 use Duan\Lib\TokenAuthenticator;
+use Duan\Models\User;
 use Schnittstabil\Csrf\TokenService\TokenService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -102,5 +103,15 @@ $webCookieAuth = function (DuanApp $app, Request $request) {
         }
     } catch (Exception $ex) {
         return new RedirectResponse('/signin');
+    }
+
+    $user = User::objects()
+        ->filter('email', '=', $token->getClaim('email'))
+        ->single(true);
+
+    if ($user) {
+        /** @var Twig_Environment $twig */
+        $twig = $app['twig'];
+        $twig->addGlobal('user', $user);
     }
 };
