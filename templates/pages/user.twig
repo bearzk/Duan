@@ -1,5 +1,8 @@
 {% extends "layout.twig" %}
 {% block content %}
+    {% if user %}
+        {% include 'partials/user_header.twig' %}
+    {% endif %}
     <div class="container">
         <div class="center">
             {{ user.email }}
