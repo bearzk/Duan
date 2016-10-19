@@ -20,7 +20,7 @@ class UserController
         $sessionToken = $app->getSessionToken();
         $sessionEmail = $sessionToken->getClaim('email');
 
-        if ($user->email == $sessionEmail) {
+        if ($user->email !== $sessionEmail) {
             return new RedirectResponse('/signin');
         }
 
