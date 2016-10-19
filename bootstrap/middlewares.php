@@ -4,6 +4,7 @@ use Duan\DuanApp;
 use Duan\Lib\TokenAuthenticator;
 use Schnittstabil\Csrf\TokenService\TokenService;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -81,5 +82,25 @@ $CSRFVerify = function (DuanApp $app, Request $request) {
                 Response::HTTP_BAD_REQUEST
             );
         }
+    }
+};
+
+/* ------------------------------------------------------------------
+ * Web Cookie Auth
+ */
+
+$webCookieAuth = function (DuanApp $app, Request $request) {
+    /** @var \Duan\Lib\JWTFacade $jwt */
+    $jwt = $app['jwt'];
+    $session = $request->cookies->get('session');
+
+    try {
+        $token = $jwt->parse($session);
+        $app->setSessionToken($token);
+        if (!$jwt->validate($token)) {
+            return new RedirectResponse('/signin');
+        }
+    } catch (Exception $ex) {
+        return new RedirectResponse('/signin');
     }
 };

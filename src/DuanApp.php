@@ -14,6 +14,7 @@ use Duan\Providers\LoggerProvider;
 use Duan\Providers\TwigProvider;
 use Evenement\EventEmitter;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Token;
 use Phormium\DB;
 use Symfony\Component\Yaml\Parser;
 
@@ -22,6 +23,7 @@ class DuanApp extends Application
     private $env;
     private $projectRoot;
     private $config;
+    private $sessionToken;
 
     public static $envs = [
         'local',
@@ -36,6 +38,16 @@ class DuanApp extends Application
         $this->env = $env;
 
         $this->projectRoot = rtrim(getcwd(), '/public');
+    }
+
+    public function setSessionToken(Token $token)
+    {
+        $this->sessionToken = $token;
+    }
+
+    public function getSessionToken()
+    {
+        return $this->sessionToken;
     }
 
     public function boot()
