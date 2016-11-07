@@ -3,7 +3,6 @@ namespace Duan\Controllers\Web;
 
 use Duan\DuanApp;
 use Duan\Exceptions\InvalidArgumentException;
-use Duan\Lib\Authenticator;
 use Duan\Lib\JWTFacade;
 use Duan\Lib\WebAuthenticator;
 use Duan\Models\User;
