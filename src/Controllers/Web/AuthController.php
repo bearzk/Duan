@@ -50,26 +50,28 @@ class AuthController
         $auth = $app['auth'];
         $user = $auth->auth($request);
         if ($user) {
-            // TODO: generate jwt and put in header
-            // /user/user->id should be protected by jwt auth
             /** @var JWTFacade $jwt */
             $jwt = $app['jwt'];
 
             $expiresIn = 14;
             $token = (string) $jwt->build(['email' => $user->email, 'login' => true], $expiresIn);
+            // session cookie has to be set in RedirectResponse
+            // because RedirectResponse won't cause after functions
+            // to set session cookie
             $res = new RedirectResponse("/user");
             $cookie = new Cookie('session', $token, time() + 3600 * 24 * $expiresIn, '/', '.' . $app->getConfig()['base_domain']);
             $res->headers->setCookie($cookie);
             return $res;
+        } else {
+            return new RedirectResponse('/signin');
         }
-        redirect('/signin');
     }
 
     public function signout(DuanApp $app, Request $request)
     {
+        $app->clearUser();
         $res = new RedirectResponse("/");
-        $cookie = new Cookie('session', '', 0, '/', '.' . $app->getConfig()['base_domain']);
-        $res->headers->setCookie($cookie);
+        $res->headers->clearCookie('session', '/', $app->getConfig()['base_domain']);
         return $res;
     }
 }
