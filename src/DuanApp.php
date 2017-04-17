@@ -5,6 +5,7 @@ namespace Duan;
 use Cicada\Application;
 use Cicada\Routing\Route;
 use Cicada\Routing\Router;
+use Duan\Models\User;
 use Duan\Providers\AuthProviders\TokenAuthProvider;
 use Duan\Providers\AuthProviders\WebAuthProvider;
 use Duan\Providers\CSRFProvider;
@@ -38,6 +39,22 @@ class DuanApp extends Application
         $this->env = $env;
 
         $this->projectRoot = rtrim(getcwd(), '/public');
+        $this['user'] = null;
+    }
+
+    public function getUser()
+    {
+        return $this['user'];
+    }
+
+    public function storeUser(User $user)
+    {
+        $this['user'] = $user;
+    }
+
+    public function clearUser()
+    {
+        $this['user'] = null;
     }
 
     public function setSessionToken(Token $token)
