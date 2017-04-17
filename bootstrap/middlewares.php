@@ -2,10 +2,8 @@
 
 use Duan\DuanApp;
 use Duan\Lib\TokenAuthenticator;
-use Duan\Models\User;
 use Schnittstabil\Csrf\TokenService\TokenService;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -90,28 +88,14 @@ $CSRFVerify = function (DuanApp $app, Request $request) {
  * Web Cookie Auth
  */
 
-$webCookieAuth = function (DuanApp $app, Request $request) {
-    /** @var \Duan\Lib\JWTFacade $jwt */
-    $jwt = $app['jwt'];
-    $session = $request->cookies->get('session');
+$webCookieAuthBefore = function (DuanApp $app, Request $request) {
+    /** @var \Duan\Lib\WebAuthenticator $authenticator */
+    $authenticator = $app['auth'];
+    return $authenticator->cookieAuth($request);
+};
 
-    try {
-        $token = $jwt->parse($session);
-        $app->setSessionToken($token);
-        if (!$jwt->validate($token)) {
-            return new RedirectResponse('/signin');
-        }
-    } catch (Exception $ex) {
-        return new RedirectResponse('/signin');
-    }
-
-    $user = User::objects()
-        ->filter('email', '=', $token->getClaim('email'))
-        ->single(true);
-
-    if ($user) {
-        /** @var Twig_Environment $twig */
-        $twig = $app['twig'];
-        $twig->addGlobal('user', $user);
-    }
+$webCookieAuthAfter = function (DuanApp $app, Request $request, Response $response) {
+    /** @var \Duan\Lib\WebAuthenticator $authenticator */
+    $authenticator = $app['auth'];
+    return $authenticator->refreshToken($response);
 };

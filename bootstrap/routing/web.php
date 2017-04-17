@@ -23,7 +23,8 @@ $restricted->get('signout', [AuthController::class, "signout"])
     ->name('auth::signout');
 
 $restricted->before($CSRFVerify);
-$restricted->before($webCookieAuth);
+$restricted->before($webCookieAuthBefore);
+$restricted->after($webCookieAuthAfter);
 
 $app->addRouteCollection($restricted);
 
