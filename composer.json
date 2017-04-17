@@ -3,7 +3,7 @@
     "description": "A url shorter in cicada",
     "type": "project",
     "require": {
-        "cicada/cicada": "^0.5.0",
+        "cicada/cicada": "dev-feature/middleware",
         "symfony/yaml": "~2.6",
         "phormium/phormium": "^0.8.0",
         "monolog/monolog": "^1.21",
@@ -33,5 +33,11 @@
         "classmap": [
             "tests/"
         ]
-    }
+    },
+    "repositories": [
+        {
+            "type":"vcs",
+            "url":"https://github.com/bearzk/cicada.git"
+        }
+    ]
 }
