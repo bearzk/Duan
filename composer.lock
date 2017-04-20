@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bearzk/cicada.git",
-                "reference": "d0e03f19a49792d9ad295bb9704ddfa802cde08d"
+                "reference": "5cebe3846d3a6d20ddb924084af2d163bf61db3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bearzk/cicada/zipball/d0e03f19a49792d9ad295bb9704ddfa802cde08d",
-                "reference": "d0e03f19a49792d9ad295bb9704ddfa802cde08d",
+                "url": "https://api.github.com/repos/bearzk/cicada/zipball/5cebe3846d3a6d20ddb924084af2d163bf61db3f",
+                "reference": "5cebe3846d3a6d20ddb924084af2d163bf61db3f",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "issues": "https://github.com/cicada/cicada/issues",
                 "source": "https://github.com/cicada/cicada"
             },
-            "time": "2017-04-16 16:13:02"
+            "time": "2017-04-19 10:32:44"
         },
         {
             "name": "evenement/evenement",
@@ -1146,16 +1146,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.33.0",
+            "version": "v1.33.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a"
+                "reference": "a87f959f4b691da66aada267a2dfdb260d0bb58a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
-                "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a87f959f4b691da66aada267a2dfdb260d0bb58a",
+                "reference": "a87f959f4b691da66aada267a2dfdb260d0bb58a",
                 "shasum": ""
             },
             "require": {
@@ -1204,7 +1204,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-03-22 15:40:09"
+            "time": "2017-04-18 21:43:11"
         }
     ],
     "packages-dev": [

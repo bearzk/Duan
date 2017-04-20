@@ -97,5 +97,5 @@ $webCookieAuthBefore = function (DuanApp $app, Request $request) {
 $webCookieAuthAfter = function (DuanApp $app, Request $request, Response $response) {
     /** @var \Duan\Lib\WebAuthenticator $authenticator */
     $authenticator = $app['auth'];
-    return $authenticator->refreshToken($response);
+    $authenticator->refreshToken($response);
 };
