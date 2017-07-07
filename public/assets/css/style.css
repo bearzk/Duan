@@ -1,6 +1,13 @@
-.container {
-    text-align: center;
-}
 .center {
-    display: inline-block;
+    padding: 6em;
+}
+
+.result {
+    font-size: 2em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    background: rgb(239, 159, 0);
+    border-radius: 4px;
 }
