@@ -1,6 +1,7 @@
 <?php
 namespace Duan\Providers;
 
+use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Pimple\Container;
@@ -15,6 +16,9 @@ class LoggerProvider implements ServiceProviderInterface
             $logger = new Logger('duan');
             $config = $container->getConfig();
             $logLevel = $config['debug'] ? Logger::DEBUG : Logger::WARNING;
+            if ('test' == $container->getEnv()) {
+                $logger->pushHandler(new NullHandler($logPath, $logLevel));
+            }
             $logger->pushHandler(new StreamHandler($logPath, $logLevel));
             return $logger;
         };
