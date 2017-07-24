@@ -18,6 +18,8 @@ class User extends BaseModel
     public $password;
     public $first_name;
     public $last_name;
+    public $created_at;
+    public $updated_at;
 
     public function __construct()
     {
@@ -31,6 +33,11 @@ class User extends BaseModel
             ->fetch();
 
         return $tokens;
+    }
+
+    public function urls()
+    {
+        return Url::objects()->filter('user_id', '=', $this->id)->fetch();
     }
 
     public static function create(JWTFacade $jwt, $email, $password, $alias, $firstName = null, $lastName = null, $withToken = false, $tokenName = null)

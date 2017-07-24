@@ -1,5 +1,20 @@
+/* reset */
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+
+.container-fluid {
+    border-top: 16px solid lightseagreen;
+    border-radius: 4px;
+}
+
 .center {
-    padding: 6em;
+    padding: 6em 0;
 }
 
 .result {
@@ -9,5 +24,11 @@
     padding-top: 2em;
     padding-bottom: 2em;
     background: rgb(239, 159, 0);
+    border-radius: 4px;
+}
+
+.card {
+    margin: 1em;
+    border: 1px solid lightgray;
     border-radius: 4px;
 }

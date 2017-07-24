@@ -5,15 +5,22 @@ use Duan\DuanApp;
 use Duan\Lib\Hash;
 use Duan\Lib\UrlValidator;
 use Duan\Models\Url;
+use Duan\Providers\TwigProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class IndexController
 {
     public function index(DuanApp $app, Request $request)
     {
+        /** @var \Twig_Environment $view */
         $view = $app['twig'];
 
-        return $view->render('pages/create.twig');
+        $urls = Url::objects()
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->fetch();
+
+        return $view->render('pages/create.twig', compact('urls'));
     }
 
     public function save(DuanApp $app, Request $request)

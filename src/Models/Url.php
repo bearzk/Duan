@@ -28,6 +28,12 @@ class Url extends BaseModel
      */
     public $customized = 0;
 
+    public $user_id;
+
+    public $created_at;
+
+    public $updated_at;
+
     public function __construct()
     {
         parent::__construct();
@@ -75,5 +81,10 @@ class Url extends BaseModel
     public static function keys()
     {
         return get_object_vars(new static());
+    }
+
+    public function __toString()
+    {
+        return $this->url;
     }
 }

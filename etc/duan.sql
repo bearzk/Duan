@@ -3,6 +3,7 @@ CREATE TABLE `urls` (
   `hash` VARCHAR(48) NOT NULL,
   `url` VARCHAR(1024) NOT NULL,
   `customized` TINYINT(1) DEFAULT 0,
+  `user_id` INT DEFAULT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
   `updated_at` TIMESTAMP NOT NULL DEFAULT NOW(),
 
