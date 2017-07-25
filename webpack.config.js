@@ -12,8 +12,8 @@ module.exports = {
         ]
     },
     output: {
-        path: path.resolve(__dirname, './public/assets/js'),
-        filename: '[name].js'
+        path: path.resolve(__dirname, './public/assets/'),
+        filename: 'js/[name].js'
     },
     module: {
         rules: [
@@ -32,7 +32,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('[name].css'),
+        new ExtractTextPlugin('css/[name].css'),
         new webpack.LoaderOptionsPlugin({ minimize: inProduction })
     ]
 };
