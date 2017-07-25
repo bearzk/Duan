@@ -4,3 +4,4 @@
 /etc/local.yml
 /log/
 dredd.yml
+/node_modules/

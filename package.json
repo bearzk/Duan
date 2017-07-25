@@ -1,0 +1,33 @@
+{
+  "name": "duan.git",
+  "version": "0.0.1",
+  "description": "Url Shortner in Cicada",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --display-error-details",
+    "production": "NODE_ENV=production npm run dev",
+    "watch": "npm run dev -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bearzk/duan.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bearzk/duan/issues"
+  },
+  "homepage": "https://github.com/bearzk/duan#readme",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.3.0"
+  }
+}
