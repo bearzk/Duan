@@ -5,6 +5,9 @@ ul {
 li {
   list-style: none; }
 
+body {
+  background-image: url(../images/topography.977e3fd0f430205e51e65488c11fdddc.png); }
+
 .container-fluid {
   border-top: 16px solid lightseagreen;
   border-radius: 4px; }
@@ -24,4 +27,6 @@ li {
 .card {
   margin: 1em;
   border: 1px solid lightgray;
-  border-radius: 4px; }
+  border-radius: 4px;
+  padding: 1em 1em;
+  background: white; }

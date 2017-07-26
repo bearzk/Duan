@@ -21,8 +21,16 @@ module.exports = {
                 test: /\.s[ac]ss$/,
                 use: ExtractTextPlugin.extract({
                     use: ['css-loader', 'sass-loader'],
-                    fallback: 'style-loader'
+                    fallback: 'style-loader',
+                    publicPath: "../"
                 })
+            },
+            {
+                test: /\.png$/,
+                loader: 'file-loader',
+                options: {
+                    name: 'images/[name].[hash].[ext]'
+                }
             },
             {
                 test: /\.js$/,

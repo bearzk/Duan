@@ -7,6 +7,9 @@ li {
   list-style: none;
 }
 
+body {
+  background-image: url('../images/topography.png'); // https://www.toptal.com/designers/subtlepatterns/topography/
+}
 
 .container-fluid {
   border-top: 16px solid lightseagreen;
@@ -31,4 +34,6 @@ li {
   margin: 1em;
   border: 1px solid lightgray;
   border-radius: 4px;
+  padding: 1em 1em;
+  background: white;
 }
