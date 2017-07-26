@@ -33,18 +33,23 @@ $app->exception(function(Exception $e) use ($app) {
             break;
     }
 
-    $context = [];
+    $error = [];
+    if (method_exists($e, 'getMessage')) {
+        $error['message'] = $e->getMessage();
+    }
     if (method_exists($e, 'getContext')) {
-        $context = (array)$e->getContext();
-    } else if (method_exists($e, 'getMessage')) {
-        $response = $e->getMessage();
-    } else {
-        $response = 'An unexpected error has occurred.';
+        $error['context'] = (array)$e->getContext();
+    }
+    if (method_exists($e, 'getTraceAsString')) {
+        $error['trace_string'] = $e->getTraceAsString();
+    }
+    if (empty($e)) {
+        $error = "An unexpected error occurred.";
     }
 
     if (isset($app['twig'])) {
         $response = $app['twig']->render($template, [
-            'context' => $context
+            'error' => $error
         ]);
     }
 
