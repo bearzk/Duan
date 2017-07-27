@@ -1,4 +1,26 @@
 /* reset */
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li,
+p {
+  margin: 0;
+  padding: 0; }
+
 ul {
   padding: 0; }
 
@@ -10,7 +32,13 @@ div {
   border: 0;
   padding: 0; }
 
+.clear-fix {
+  content: "";
+  display: table;
+  clear: both; }
+
 body {
+  color: #333;
   background-image: url(../images/topography.977e3fd0f430205e51e65488c11fdddc.png); }
 
 /* variables */
@@ -35,7 +63,6 @@ body {
   margin-bottom: 2em;
   padding-top: 2em;
   padding-bottom: 2em;
-  background: #ef9f00;
   border-radius: 4px; }
 
 .card {

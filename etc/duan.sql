@@ -4,8 +4,9 @@ CREATE TABLE `urls` (
   `url` VARCHAR(1024) NOT NULL,
   `customized` TINYINT(1) DEFAULT 0,
   `user_id` INT DEFAULT NULL,
-  `created_at` TIMESTAMP NOT NULL DEFAULT NOW(),
-  `updated_at` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `clicks` INT DEFAULT 0,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
 
   PRIMARY KEY (`hash`),
   KEY `urls_url_index` (`url`),

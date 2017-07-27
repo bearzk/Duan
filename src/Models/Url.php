@@ -30,6 +30,8 @@ class Url extends BaseModel
 
     public $user_id;
 
+    public $clicks;
+
     public $created_at;
 
     public $updated_at;
@@ -72,6 +74,7 @@ class Url extends BaseModel
                 $url->customized = 1;
             }
 
+            $url->created_at = date('Y-m-d H:i:s');
             $url->save();
         }
 

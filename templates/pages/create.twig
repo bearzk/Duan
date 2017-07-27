@@ -2,17 +2,14 @@
 {% block content %}
     <div class="content container-fluid">
         <div class="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12 main">
-            <form class="header" method="post">
+            <form class="header col-lg-12" method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
-                {#<input type="text" name="url" placeholder="https://www.example.com/"/><input type="submit" value="Generate" />#}
-                {#<div class="col-lg-6 col-lg-offset-3">#}
-                    <div class="input-group">
-                          <input type="text" name="url" class="form-control" placeholder="https://www.example.com/">
-                          <span class="input-group-btn">
-                          <button class="btn btn-default" type="submit" value="Generate">Generate</button>
-                          </span>
-                    </div><!-- /input-group -->
-                {#</div><!-- /.col-lg-6 -->#}
+                <div class="input-group">
+                      <input type="text" name="url" class="form-control" placeholder="https://www.example.com/">
+                      <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit" value="Generate">Generate</button>
+                      </span>
+                </div><!-- /input-group -->
             </form>
             {% if context.result %}
                 <div class="result">

@@ -37,13 +37,20 @@ class IndexController
 
         $context['result'] = $this->buildResultUrl($request, $url);
 
-        return $view->render('pages/create.twig', ['context' => $context]);
+        $urls = Url::objects()
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->fetch();
+
+        return $view->render('pages/create.twig', compact('urls', 'context'));
     }
 
     public function redirect(DuanApp $app, Request $request, $hash)
     {
         /** @var Url $url */
         $url = Url::find($hash);
+        $url->clicks += 1;
+        $url->update();
 
         $this->checkToBack($url->url);
 
@@ -75,6 +82,7 @@ class IndexController
                 $url->hash = $h;
                 $url->customized = 1;
             }
+            $url->created_at = date('Y-m-d H:i:s');
             $url->save();
         }
 
