@@ -1,40 +1,38 @@
 {% extends "layout.twig" %}
 {% block content %}
-    <div class="container-fluid">
-        <div class="center">
-            <div class="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12">
-                <form method="post">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
-                    {#<input type="text" name="url" placeholder="https://www.example.com/"/><input type="submit" value="Generate" />#}
-                    {#<div class="col-lg-6 col-lg-offset-3">#}
-                        <div class="input-group">
-                              <input type="text" name="url" class="form-control" placeholder="https://www.example.com/">
-                              <span class="input-group-btn">
-                              <button class="btn btn-default" type="submit" value="Generate">Generate</button>
-                              </span>
-                        </div><!-- /input-group -->
-                    {#</div><!-- /.col-lg-6 -->#}
-                </form>
-                {% if context.result %}
-                    <div class="result">
-                        <p class="text-center">
-                            {% if context.result == 'invalid token' %}
-                                {{ context.result }}
-                            {% else %}
-                                <a href="{{ context.result }}" target="_blank">{{ context.result }}</a>
-                            {% endif %}
-                        </p>
-                    </div>
-                {% endif %}
-                <div class="row">
-                    <div class="col-lg-3 card">
-                        <ul>
-                            <li>Latest short links:</li>
-                            {% for url in urls %}
-                                <li><a href="http://duan.dev/{{ url.hash }}" target="_blank">http://duan.dev/{{ url.hash }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+    <div class="content container-fluid">
+        <div class="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12 main">
+            <form class="header" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
+                {#<input type="text" name="url" placeholder="https://www.example.com/"/><input type="submit" value="Generate" />#}
+                {#<div class="col-lg-6 col-lg-offset-3">#}
+                    <div class="input-group">
+                          <input type="text" name="url" class="form-control" placeholder="https://www.example.com/">
+                          <span class="input-group-btn">
+                          <button class="btn btn-default" type="submit" value="Generate">Generate</button>
+                          </span>
+                    </div><!-- /input-group -->
+                {#</div><!-- /.col-lg-6 -->#}
+            </form>
+            {% if context.result %}
+                <div class="result">
+                    <p class="text-center">
+                        {% if context.result == 'invalid token' %}
+                            {{ context.result }}
+                        {% else %}
+                            <a href="{{ context.result }}" target="_blank">{{ context.result }}</a>
+                        {% endif %}
+                    </p>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-lg-12 card">
+                    <ul>
+                        <li>Latest short links:</li>
+                        {% for url in urls %}
+                            <li><a href="http://duan.dev/{{ url.hash }}" target="_blank">http://duan.dev/{{ url.hash }}</a></li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>

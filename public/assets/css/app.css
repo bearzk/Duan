@@ -5,15 +5,29 @@ ul {
 li {
   list-style: none; }
 
+div {
+  margin: 0;
+  border: 0;
+  padding: 0; }
+
 body {
   background-image: url(../images/topography.977e3fd0f430205e51e65488c11fdddc.png); }
 
-.container-fluid {
-  border-top: 16px solid lightseagreen;
-  border-radius: 4px; }
+/* variables */
+.nav {
+  color: white;
+  background-color: #226666; }
+  .nav .logo,
+  .nav .header-title,
+  .nav .user-actions {
+    font-size: 24px; }
 
-.center {
-  padding: 6em 0; }
+.content {
+  padding: 0; }
+  .content .main {
+    padding: 0; }
+    .content .main .header {
+      padding: 60px 0; }
 
 .result {
   font-size: 2em;

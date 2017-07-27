@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container-fluid">
         <div class="center">
-            {% include "partials/flashes.twig" %}
+            {% include "partials/_flashes.twig" %}
             <form class="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12 login" method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
                 <div class="form-group">

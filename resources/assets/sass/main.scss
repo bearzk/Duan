@@ -7,17 +7,45 @@ li {
   list-style: none;
 }
 
+div {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
 body {
   background-image: url('../images/topography.png'); // https://www.toptal.com/designers/subtlepatterns/topography/
 }
 
-.container-fluid {
-  border-top: 16px solid lightseagreen;
-  border-radius: 4px;
+/* variables */
+$greenblue: #226666;
+
+// header
+
+.nav {
+  color: white;
+  background-color: $greenblue;
+
+  .logo,
+  .header-title,
+  .user-actions {
+    font-size: 24px;
+  }
 }
 
-.center {
-  padding: 6em 0;
+// content
+
+.content {
+
+  padding: 0;
+
+  .main {
+    padding: 0;
+
+    .header {
+      padding: 60px 0;
+    }
+  }
 }
 
 .result {
@@ -37,3 +65,5 @@ body {
   padding: 1em 1em;
   background: white;
 }
+
+// footer

@@ -2,7 +2,7 @@
 {% block content %}
     <div class="container">
         <div class="center">
-            {% include "partials/flashes.twig" %}
+            {% include "partials/_flashes.twig" %}
             <form class="login" method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token }}"/>
                 <input type="text" name="email" placeholder="name@example.com"/>
