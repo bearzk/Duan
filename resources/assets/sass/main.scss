@@ -52,7 +52,7 @@ body {
 /* variables */
 $greenblue: #226666;
 
-// nav
+/* nav */
 
 .nav {
   color: white;
@@ -63,9 +63,20 @@ $greenblue: #226666;
   .user-actions {
     font-size: 24px;
   }
+
+  .logo {
+    a {
+      color: white;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
 }
 
-// content
+/* content */
 
 .content {
 
@@ -97,4 +108,4 @@ $greenblue: #226666;
   background: white;
 }
 
-// footer
+/* footer */

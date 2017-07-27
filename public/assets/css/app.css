@@ -42,6 +42,7 @@ body {
   background-image: url(../images/topography.977e3fd0f430205e51e65488c11fdddc.png); }
 
 /* variables */
+/* nav */
 .nav {
   color: white;
   background-color: #226666; }
@@ -49,7 +50,13 @@ body {
   .nav .header-title,
   .nav .user-actions {
     font-size: 24px; }
+  .nav .logo a {
+    color: white;
+    text-decoration: none; }
+    .nav .logo a:hover {
+      text-decoration: none; }
 
+/* content */
 .content {
   padding: 0; }
   .content .main {
@@ -71,3 +78,5 @@ body {
   border-radius: 4px;
   padding: 1em 1em;
   background: white; }
+
+/* footer */
