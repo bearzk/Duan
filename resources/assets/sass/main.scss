@@ -52,6 +52,16 @@ body {
 /* variables */
 $greenblue: #226666;
 
+/* default-colors */
+a {
+  color: $greenblue;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 /* nav */
 
 .nav {
@@ -67,14 +77,8 @@ $greenblue: #226666;
   .logo,
   .user-actions {
     a {
-      color: white;
-      text-decoration: none;
-
-
-      &:hover {
-        text-decoration: none;
+        color: white;
       }
-    }
   }
 }
 
