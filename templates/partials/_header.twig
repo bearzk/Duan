@@ -9,7 +9,11 @@
     </div>
     <div class="user-actions col-lg-3">
         <div class="pull-left">
-            User Actions
+            {% if user %}
+                <a href="/signout">Sign Out</a>
+            {% else %}
+                <a href="/signin">Sign In</a>
+            {% endif %}
         </div>
     </div>
 </div>

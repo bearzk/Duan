@@ -75,6 +75,7 @@ class DuanApp extends Application
         $this->setupAuth();
         $this->setupJWT();
         $this->setupEvents();
+        $this->loadManifest();
     }
 
     public function getEnv()
@@ -134,6 +135,15 @@ class DuanApp extends Application
         $emitter->on(Router::EVENT_MATCH, function ($app, $request, Route $route) {
             $this['logger']->info($route->getName());
         });
+    }
+
+    public function loadManifest()
+    {
+        $path = "assets/manifest.json";
+        $json = file_get_contents($path);
+        $manifest = json_decode($json)->app;
+        $this['js'] = 'assets/' . $manifest[0];
+        $this['css'] = 'assets/' . $manifest[1];
     }
 
     public function configure()

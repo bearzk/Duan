@@ -64,10 +64,12 @@ $greenblue: #226666;
     font-size: 24px;
   }
 
-  .logo {
+  .logo,
+  .user-actions {
     a {
       color: white;
       text-decoration: none;
+
 
       &:hover {
         text-decoration: none;

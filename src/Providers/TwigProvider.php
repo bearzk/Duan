@@ -33,6 +33,9 @@ class TwigProvider implements ServiceProviderInterface
             $csrf = $container['csrf'];
             $twig->addGlobal('csrf_token', $csrf->generate());
 
+            $twig->addGlobal('js', $container['js']);
+            $twig->addGlobal('css', $container['css']);
+
             return $twig;
         };
     }

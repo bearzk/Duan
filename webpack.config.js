@@ -13,7 +13,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, './public/assets/'),
-        filename: 'js/[name].js'
+        filename: 'js/[name].[chunkhash].js'
     },
     module: {
         rules: [
@@ -40,8 +40,18 @@ module.exports = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('css/[name].css'),
-        new webpack.LoaderOptionsPlugin({ minimize: inProduction })
+        new ExtractTextPlugin('css/style.[chunkhash].css'),
+        new webpack.LoaderOptionsPlugin({ minimize: inProduction }),
+
+        function () {
+            this.plugin('done', stats => {
+                require('fs').writeFileSync(
+                    path.join(__dirname, 'public/assets/manifest.json'),
+                    JSON.stringify(stats.toJson().assetsByChunkName)
+                );
+            })
+
+        }
     ]
 };
 
