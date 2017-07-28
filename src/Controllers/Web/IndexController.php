@@ -5,7 +5,6 @@ use Duan\DuanApp;
 use Duan\Lib\Hash;
 use Duan\Lib\UrlValidator;
 use Duan\Models\Url;
-use Duan\Providers\TwigProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class IndexController

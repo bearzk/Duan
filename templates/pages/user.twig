@@ -1,24 +1,23 @@
 {% extends "layout.twig" %}
 {% block content %}
     <div class="container-fluid">
-        {% if user %}
-            {% include 'partials/_header.twig' %}
-        {% endif %}
         <div class="center">
             {{ user.email }}
             {% for token in user.tokens %}
                 {{ token }}
             {% endfor %}
         </div>
+        {% if urls %}
         <div class="row">
             <div class="col-lg-3 card">
                 <ul>
-                    <li>Latest short links:</li>
+                    <li>Links: </li>
                     {% for url in urls %}
-                        <li><a href="http://duan.dev/{{ url.hash }}" target="_blank">http://duan.dev/{{ url.hash }}</a></li>
+                        <li><a href="http://duan.dev/{{ url.hash }}" target="_blank">http://duan.dev/{{ url.hash }}</a> <span>{{ url.clicks }}</span></li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
